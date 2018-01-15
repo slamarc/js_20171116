@@ -62,7 +62,7 @@
             let that=this;
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
-                    that.msgZone.showMessages();
+                    that.msgZone.showMessages({type:'partial'});
                 }
             });
 

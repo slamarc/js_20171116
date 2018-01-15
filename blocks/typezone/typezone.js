@@ -23,6 +23,7 @@
                     User.logged=true;
                     this.renderChatZone(App);
                     App.updateMembers();
+                    App.msgZone.showMessages();
                 }
                 else
                     return false;

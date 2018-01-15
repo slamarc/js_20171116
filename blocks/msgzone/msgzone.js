@@ -7,17 +7,18 @@
 
         constructor(node, options = {},User) {
             super(node, options);
-            this.username=User.getUser();
+            this.User=User;
+            this.oldmessages=[];
         }
 
-        showMessages() {
+        showMessages(options={}) {
             let data = null;
 
             let xhr = new XMLHttpRequest();
             let that=this;
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4 && this.status===200) {
-                    that.renderMessages(JSON.parse(this.response));
+                    that.renderMessages(JSON.parse(this.response),options);
                 }
             });
 
@@ -37,19 +38,34 @@
             return splitbyN.map(v=>"<p>"+v+"</p>").join("");
         }
 
-        renderMessages(messages){
+        messageTPL({username,message,datetime}){
+            return `<li class="${(username===this.User.getUser()) ? "message__self" : "message__other"}">
+                              <div class="msg">
+                                  <div class="user">${username}</div>
+                                ${this.n2p(message)}
+                                <time>${this.getMessageTime(datetime)}</time>
+                              </div>
+                            </li>`;
+        }
 
-            this.node.innerHTML='<ol class="app__chat">'+
-                    messages.map(({username,message,datetime})=>{
-                        return `<li class="${(username===this.username) ? "message__self" : "message__other"}">
-                          <div class="msg">
-                              <div class="user">${username}</div>
-                            ${this.n2p(message)}
-                            <time>${this.getMessageTime(datetime)}</time>
-                          </div>
-                        </li>`
-                    }).join('')+
-                '</ol>';
+        renderMessages(messages,{type='full'}){
+
+            if (!this.oldmessages.length || type=='full'){
+                this.node.innerHTML='<ol class="app__chat">'+
+                        messages.map((v)=>{
+                            return this.messageTPL(v);
+                        }).join('')+
+                    '</ol>';                
+            }
+            else{
+                let oldIDs=this.oldmessages.map(({_id})=>_id);
+                let newMessages=messages.filter(({_id})=>{return !oldIDs.includes(_id)});
+                for (let message of newMessages){
+                    this.node.querySelector("ol").insertAdjacentHTML('beforeend',this.messageTPL(message));
+                }
+            }
+            this.oldmessages=messages;
+            this.node.scrollIntoView(false);
         }
 
 
