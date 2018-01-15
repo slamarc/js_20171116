@@ -6,9 +6,8 @@
     const Button = window.Button;
     const Storage = window.AppStorage;
     const User = window.User;
-    //const Messages=window.Messages;
     const TypeZone=window.TypeZone;
-    //const MsgZone=window.MsgZone;
+    const MsgZone=window.MsgZone;
 
     class App extends Block {
 
@@ -16,7 +15,6 @@
             super(node, options);
             this.chatStorage=new Storage();
             this.User = new User(this.chatStorage);
-            //this.messages = new Messages();
             this.User.logged=false;
         }
 
@@ -31,8 +29,8 @@
                     <div class="app__typezone js-typezone"></div>
                 </div>`;
             this.membersNode=this.node.querySelector('.js-members');
-            //this.msgZone=new MsgZone(this.node.querySelector('.js-messages'))
-            //this.msgZone.render(this.messages);
+            this.msgZone=new MsgZone(this.node.querySelector('.js-messages'));
+            this.msgZone.render();
             //console.log(this.User);
             this.typeZone = new TypeZone(this.node.querySelector('.js-typezone'));
 
