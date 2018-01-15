@@ -1,20 +1,15 @@
-(function () {
-    'use strict';
+import Block from '../block';
 
-    const Block = window.Block;
+export default class Textarea extends Block {
 
-    class Textarea extends Block {
-
-        constructor(node, options = {}) {
-            super(node, options);
-        }
-
-        render() {
-            this.node.innerHTML = `
-            <textarea class="textarea" rows="${this.options.rows}" placeholder="${this.options.placeholder}"></textarea>`;
-        }
-
+    constructor(node, options = {}) {
+        super(node, options);
     }
 
-    window.Textarea = Textarea;
-})();
+    render() {
+        this.node.innerHTML = `
+        <textarea class="textarea" rows="${this.options.rows}" placeholder="${this.options.placeholder}"></textarea>`;
+    }
+
+}
+
