@@ -29,8 +29,8 @@
                     <div class="app__typezone js-typezone"></div>
                 </div>`;
             this.membersNode=this.node.querySelector('.js-members');
-            this.msgZone=new MsgZone(this.node.querySelector('.js-messages'));
-            this.msgZone.render();
+            this.msgZone=new MsgZone(this.node.querySelector('.js-messages'),{},this.User);
+            this.msgZone.showMessages();
             //console.log(this.User);
             this.typeZone = new TypeZone(this.node.querySelector('.js-typezone'));
 
@@ -59,11 +59,10 @@
             });
 
             var xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
+            let that=this;
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
-                console.log(this.responseText);
+                    that.msgZone.showMessages();
                 }
             });
 

@@ -5,19 +5,19 @@
 
     class MsgZone extends Block {
 
-        constructor(node, options = {}) {
+        constructor(node, options = {},User) {
             super(node, options);
+            this.username=User.getUser();
         }
 
-        render() {
-            var data = null;
+        showMessages() {
+            let data = null;
 
-            var xhr = new XMLHttpRequest();
-            xhr.withCredentials = false;
-
+            let xhr = new XMLHttpRequest();
+            let that=this;
             xhr.addEventListener("readystatechange", function () {
-                if (this.readyState === 4) {
-                console.log(this);
+                if (this.readyState === 4 && this.status===200) {
+                    that.renderMessages(JSON.parse(this.response));
                 }
             });
 
@@ -27,6 +27,29 @@
             xhr.setRequestHeader("cache-control", "no-cache");
 
             xhr.send(data);
+        }
+
+        getMessageTime(msec){
+            return new Date(msec).toTimeString().split(" ")[0].substr(0,5);
+        }
+        n2p(message){
+            let splitbyN=message.split("\n");
+            return splitbyN.map(v=>"<p>"+v+"</p>").join("");
+        }
+
+        renderMessages(messages){
+
+            this.node.innerHTML='<ol class="app__chat">'+
+                    messages.map(({username,message,datetime})=>{
+                        return `<li class="${(username===this.username) ? "message__self" : "message__other"}">
+                          <div class="msg">
+                              <div class="user">${username}</div>
+                            ${this.n2p(message)}
+                            <time>${this.getMessageTime(datetime)}</time>
+                          </div>
+                        </li>`
+                    }).join('')+
+                '</ol>';
         }
 
 
