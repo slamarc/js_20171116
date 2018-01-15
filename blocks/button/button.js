@@ -10,8 +10,9 @@
         }
 
         render() {
+            console.log(this.options);
             this.node.innerHTML = `
-            <button class="button">
+            <button class="button ${this.options.className}">
                 ${this.options.text}
             </button>`;
         }

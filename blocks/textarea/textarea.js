@@ -3,7 +3,7 @@
 
     const Block = window.Block;
 
-    class Input extends Block {
+    class TextArea extends Block {
 
         constructor(node, options = {}) {
             super(node, options);
@@ -11,10 +11,10 @@
 
         render() {
             this.node.innerHTML = `
-            <input type='input' class='input' value="${this.options.value}" placeholder="${this.options.placeholder}"/>`;
+            <textarea placeholder="${this.options.placeholder}"/></textarea>`;
         }
 
     }
 
-    window.Input = Input;
+    window.TextArea = TextArea;
 })();
