@@ -3,7 +3,10 @@ import Block from '../block';
 import Textarea from '../textarea/textarea';
 import Input from '../input/input';
 
+import Messages from '../messages/messages'
+
 import template from './app.pug';
+import './app.scss';
 
 class App extends Block {
 
@@ -12,10 +15,9 @@ class App extends Block {
     }
 
     render() {
-        this.node.innerHTML = template({
-            name: 'Чатик',
-            nums: [1,2,3,4]
-        });
+        this.node.innerHTML = template();
+        
+        let messages = new Messages(this.node.querySelector('.js-chat-inner'));
 
         let button = new Button(this.node.querySelector('.js-submit-name'), {
             text: 'Войти'
@@ -35,6 +37,7 @@ class App extends Block {
             rows: 5
         });
 
+        messages.render();
         button.render();
         input.render();
         textareaMessage.render();

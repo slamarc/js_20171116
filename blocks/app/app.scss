@@ -24,7 +24,6 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -83,87 +82,6 @@ body {
 	padding: 30px;
 }
 
-/*# messages #*/
-.messages {
-	padding: 30px;
-	max-height: 500px;
-	overflow-y: scroll;
-}
-.message {
-	margin-bottom: 30px;
-}
-.message__header {
-	color: #484654;
-	font-size: 18px;
-	margin-bottom: 20px;
-	position: relative;
-
-}
-.message__header:after {
-	content: '';
-	width: 10px;
-	height: 10px;
-	background: #000;
-	position: absolute;
-	top: 50%;
-	transform: translateY(-40%);
-	border-radius: 100%;
-	-webkit-border-radius: 100%;
-	-moz-border-radius: 100%;
-}
-.message__body {
-	padding: 20px;
-	color: #fff;
-	line-height: 110%;
-	position: relative;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
-.message__body:before {
-	top: -10px;
-	position: absolute;
-	content: '';
-	width: 0; 
-	height: 0; 
-	border-style: solid;
-	border-width: 0 10px 10px 10px;
-}
-
-.message_receive .message__header {
-	text-align: right;
-	padding-right: 20px;
-}
-.message_receive .message__header:after {
-	right: 0;
-	background: #95c2ec;
-}
-.message_receive .message__body {
-	background: #95c2ec;
-	margin-left: 70px;
-}
-.message_receive .message__body:before {
-	right: 10px;
-	border-color: transparent transparent #95c2ec transparent;
-}
-
-.message_send .message__header {
-	text-align: left;
-	padding-left: 20px;
-}
-.message_send .message__header:after {
-	left: 0;
-	background: #87bb71;
-}
-.message_send .message__body {
-	background: #87bb71;
-	margin-right: 70px;	
-}
-.message_send .message__body:before {
-	left: 10px;
-	border-color: transparent transparent #87bb71 transparent;
-}
-
 /*# message-create #*/
 .message-create {
 	display: none;
@@ -176,7 +94,6 @@ body {
 	color: #94c3ed;
 }
 
-/*# auth #*/
 .auth {
 	display: block;
 }
@@ -228,7 +145,6 @@ body {
 	
 }
 
-/*# placeholder #*/
 ::-webkit-input-placeholder {
 	transition: opacity .4s ease;
     color: #a9a9a9;
