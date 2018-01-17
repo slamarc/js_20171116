@@ -1,6 +1,4 @@
 * {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -82,38 +80,6 @@ body {
 	padding: 30px;
 }
 
-/*# message-create #*/
-.message-create {
-	display: none;
-}
-.message-create__submit {
-	margin-top: 10px;
-	text-align: right;
-}
-.message-create__submit .button {
-	color: #94c3ed;
-}
-
-.auth {
-	display: block;
-}
-.auth__submit {
-	margin-top: 10px;
-	text-align: center;
-}
-.auth__submit .button {
-	color: #fff;
-	padding: 15px;
-	width: 30%;
-	background: #f0916d;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-}
-.auth__submit .button:hover {
-	background: #e28967;
-}
-
 .input {
 	width: 100%;
 	padding: 15px;
@@ -141,8 +107,7 @@ body {
 	font-size: 16px;
 	font-weight: bold;		
 	text-transform: uppercase;	
-	transition: all .6s ease;
-	
+	transition: all .6s ease;	
 }
 
 ::-webkit-input-placeholder {

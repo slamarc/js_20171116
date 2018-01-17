@@ -1,4 +1,6 @@
-import Block from '../../block';
+'use strict';
+
+import Block from '../block';
 import template from './message.pug';
 import './message.scss';
 

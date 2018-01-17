@@ -1,10 +1,12 @@
+'use strict';
+
 import Block from '../block';
-import Message from './message/message'
+import Message from '../message/message';
 
-import template from './messages.pug';
-import './messages.scss';
+import template from './chat.pug';
+import './chat.scss';
 
-export default class Messages extends Block {
+export default class Chat extends Block {
     
     constructor(node, options = {}) {
         super(node, options);
