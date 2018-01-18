@@ -1,4 +1,8 @@
+'use strict';
+
 const path = require('path');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: './blocks/app/app.js',
@@ -7,9 +11,11 @@ module.exports = {
         path: path.resolve(__dirname, './public/'),
         filename: 'app.js'
     },
-
+    
+    watch: false,
+    
     devtool: "source-map",
-
+    
     module: {
         rules: [
             {
@@ -20,8 +26,22 @@ module.exports = {
             {
                 test: /\.pug$/,
                 loader: 'pug-loader'
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
+                    }
+                ]
             }
         ]
     }
-
+    
 };

@@ -1,0 +1,44 @@
+- 
+    let MessageList = [
+        {
+            user: "Василий Пупкин", 
+            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            isOwner: false
+        },
+        {
+            user: "Вы", 
+            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            isOwner: true
+        },
+        {
+            user: "Василий Пупкин", 
+            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            isOwner: false
+        },
+        {
+            user: "Василий Пупкин", 
+            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            isOwner: false
+        },
+        {
+            user: "Вы", 
+            message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            isOwner: true
+        }
+    ];
+
+mixin messageItemRecieve(message)
+    div.message.message_receive
+        div.message__header= message.user
+        div.message__body= message.message
+        
+mixin messageItemSend(message)
+    div.message.message_send
+        div.message__header= message.user
+        div.message__body= message.message
+    
+for message in MessageList
+    if message.isOwner
+        +messageItemRecieve(message)
+    else
+        +messageItemSend(message)
