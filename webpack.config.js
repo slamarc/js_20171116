@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-    entry: './blocks/app/app.js',
+    entry: './main.js',
 
     output: {
         path: path.resolve(__dirname, './public/'),

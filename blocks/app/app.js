@@ -21,12 +21,10 @@ class App extends Block {
         this.node.innerHTML = template();
         
         let chat = new Chat(this.node.querySelector('.js-chat-inner'));
-        let auth = new Auth(this.node.querySelector('.js-chat-footer'));
         let createMsg = new CreateMsg(this.node.querySelector('.js-chat-footer'));
                 
         chat.render();        
         createMsg.render();
-        auth.render();
     }
 
 }
@@ -36,3 +34,30 @@ window.addEventListener('DOMContentLoaded', () => {
     app.render();
 });
 
+    let MessageList = [
+    {
+        user: "Василий Пупкин",
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        isOwner: false
+    },
+    {
+        user: "Вы",
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        isOwner: true
+    },
+    {
+        user: "Василий Пупкин",
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        isOwner: false
+    },
+    {
+        user: "Василий Пупкин",
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        isOwner: false
+    },
+    {
+        user: "Вы",
+        message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        isOwner: true
+    }
+];

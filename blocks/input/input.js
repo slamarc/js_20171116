@@ -11,4 +11,8 @@ export default class Input extends Block {
         <input class="input" value="${this.options.value}" placeholder="${this.options.placeholder}"/>`;
     }
 
+    getValue() {
+        return this.node.querySelector('input').value;
+    }
+
 }
