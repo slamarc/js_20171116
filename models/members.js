@@ -61,6 +61,7 @@ export default class Members extends Block {
 			return;
 		}
 		//console.log(this.members,model);
+		this.members= [...new Set(this.members)]; 
 		this.node.innerHTML="В чате: "+this.members.join(", ");
 	}
 }

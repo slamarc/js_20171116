@@ -1624,6 +1624,8 @@ var _block2 = _interopRequireDefault(_block);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1712,6 +1714,7 @@ var Members = function (_Block) {
 				return;
 			}
 			//console.log(this.members,model);
+			this.members = [].concat(_toConsumableArray(new Set(this.members)));
 			this.node.innerHTML = "В чате: " + this.members.join(", ");
 		}
 	}]);
