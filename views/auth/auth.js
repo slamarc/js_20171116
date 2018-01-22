@@ -13,12 +13,25 @@ export default class Auth extends View {
         this.node.innerHTML = template();
 
         let model = User.load();
-        console.log(model);
+        //console.log(model);
         if (model) {
             location.href = './#chat';
             return;
         }
 
+        this.renderAuth();
+
+        window.addEventListener("hashchange",()=>{
+
+            let model = User.load();
+            if (!model && location.hash==="#auth") {
+                this.renderAuth();
+            }
+        });
+
+    }
+
+    renderAuth(){
         this.button = new Button(this.node.querySelector('.js-submit'), {
             text: 'Войти'
         });

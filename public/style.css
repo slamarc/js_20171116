@@ -40,7 +40,23 @@ html, body {
     height: 40px;
 }
 
+/* ABOUT*/
+.about-window .about{
+    background-color: #e0dede;
+    margin: 100px;
+    padding: 10px;
+    border-radius: 5px;
+}
 
+/* LOGOUT */
+.logout-window .bye {
+    margin: 300px auto;
+    width: 800px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 40px;
+    color: rgba(255,255,255,0.9);
+} 
 
 /* M E N U */
 
@@ -60,15 +76,15 @@ html, body {
     -ms-user-select: none;
 }
 
-.menu .views{
+.menu .menu__views{
     float: right;
 }
 
-.menu .views ul{
+.menu .menu__views ul{
     list-style-type: none;
 }
 
-.menu .views ul li {
+.menu .menu__views ul li {
     display: inline; /* Отображать как строчный элемент */
     margin-right: 5px; /* Отступ слева */
     border: 1px solid #000; /* Рамка вокруг текста */
@@ -77,7 +93,11 @@ html, body {
     padding: 5px; /* Поля вокруг текста */
    }
 
-.menu .views a{
+.menu .menu__views ul li.active{
+    background-color: gray;
+}
+
+.menu .menu__views a{
     color: rgba(255,255,255,0.98);
     text-decoration: none;
 }
@@ -188,7 +208,7 @@ html, body {
     display: inherit;
     text-align: center;
     font-size: 13px;
-    color: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.5);
     background: rgba(234, 247, 255, 0.035);
     line-height: 30px;
     border-radius: 100px;

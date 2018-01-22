@@ -380,6 +380,12 @@ var User = function () {
                 name: this.name
             }));
         }
+    }, {
+        key: 'logout',
+        value: function logout() {
+            delete this.name;
+            localStorage.removeItem('user');
+        }
     }], [{
         key: 'load',
         value: function load() {
@@ -540,7 +546,7 @@ var Router = function () {
 
             window.addEventListener('hashchange', function () {
                 _this.show(location.hash.replace('#', ''));
-                console.log("hash " + location.hash);
+                //console.log("hash "+location.hash);
             });
 
             this.show(location.hash.replace('#', ''));
@@ -628,31 +634,47 @@ var Auth = function (_View) {
         _this.node.innerHTML = (0, _auth2.default)();
 
         var model = _user2.default.load();
-        console.log(model);
+        //console.log(model);
         if (model) {
             location.href = './#chat';
             return _possibleConstructorReturn(_this);
         }
 
-        _this.button = new _button2.default(_this.node.querySelector('.js-submit'), {
-            text: 'Войти'
+        _this.renderAuth();
+
+        window.addEventListener("hashchange", function () {
+
+            var model = _user2.default.load();
+            if (!model && location.hash === "#auth") {
+                _this.renderAuth();
+            }
         });
 
-        _this.input = new _input2.default(_this.node.querySelector('.js-name'), {
-            value: '',
-            placeholder: 'Введите имя'
-        });
-
-        _this.input.render();
-        _this.button.render();
-
-        _this.button.onClick = function () {
-            _this.login();
-        };
         return _this;
     }
 
     _createClass(Auth, [{
+        key: 'renderAuth',
+        value: function renderAuth() {
+            var _this2 = this;
+
+            this.button = new _button2.default(this.node.querySelector('.js-submit'), {
+                text: 'Войти'
+            });
+
+            this.input = new _input2.default(this.node.querySelector('.js-name'), {
+                value: '',
+                placeholder: 'Введите имя'
+            });
+
+            this.input.render();
+            this.button.render();
+
+            this.button.onClick = function () {
+                _this2.login();
+            };
+        }
+    }, {
         key: 'login',
         value: function login() {
             var name = this.input.getValue();
@@ -682,8 +704,10 @@ exports.default = Auth;
 
 
 Object.defineProperty(exports, "__esModule", {
-        value: true
+    value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _view = __webpack_require__(4);
 
@@ -718,34 +742,52 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Chat = function (_View) {
-        _inherits(Chat, _View);
+    _inherits(Chat, _View);
 
-        function Chat(node) {
-                _classCallCheck(this, Chat);
+    function Chat(node) {
+        _classCallCheck(this, Chat);
 
-                var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, node));
+        var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, node));
 
-                _this.node.innerHTML = (0, _chat2.default)();
+        _this.node.innerHTML = (0, _chat2.default)();
 
-                var model = _user2.default.load();
-                console.log(model);
-                if (!model) {
-                        location.href = './#auth';
-                }
-
-                _this.messageModel = new _message_model2.default();
-
-                _this.messageModel.start();
-
-                _this.form = new _messageCreate2.default(document.querySelector('.js-form'), _this.messageModel);
-                _this.form.render();
-
-                _this.messages = new _message2.default(_this.node.querySelector('.js-list'), _this.messageModel);
-                _this.messages.render();
-                return _this;
+        var model = _user2.default.load();
+        //console.log(model);
+        if (!model) {
+            location.href = './#auth';
         }
 
-        return Chat;
+        _this.renderChat();
+
+        window.addEventListener("hashchange", function () {
+
+            var model = _user2.default.load();
+            if (!model && location.hash === "#chat") {
+                alert("Пожалуйста, авторизуйтесь.");
+                location.href = './#auth';
+            } else if (model && location.hash === "#chat") {
+                _this.renderChat();
+            }
+        });
+        return _this;
+    }
+
+    _createClass(Chat, [{
+        key: 'renderChat',
+        value: function renderChat() {
+            this.messageModel = new _message_model2.default();
+
+            this.messageModel.start();
+
+            this.form = new _messageCreate2.default(document.querySelector('.js-form'), this.messageModel);
+            this.form.render();
+
+            this.messages = new _message2.default(this.node.querySelector('.js-list'), this.messageModel);
+            this.messages.render();
+        }
+    }]);
+
+    return Chat;
 }(_view2.default);
 
 exports.default = Chat;
@@ -1029,6 +1071,22 @@ var _chat = __webpack_require__(7);
 
 var _chat2 = _interopRequireDefault(_chat);
 
+var _logout = __webpack_require__(22);
+
+var _logout2 = _interopRequireDefault(_logout);
+
+var _about = __webpack_require__(21);
+
+var _about2 = _interopRequireDefault(_about);
+
+var _members = __webpack_require__(25);
+
+var _members2 = _interopRequireDefault(_members);
+
+var _menu = __webpack_require__(19);
+
+var _menu2 = _interopRequireDefault(_menu);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = new _router2.default();
@@ -1036,9 +1094,20 @@ var router = new _router2.default();
 window.addEventListener('DOMContentLoaded', function () {
     var authView = new _auth2.default(document.querySelector('.js-auth-view'));
     var chatView = new _chat2.default(document.querySelector('.js-chat-view'));
+    var logoutView = new _logout2.default(document.querySelector('.js-logout-view'));
+    var aboutView = new _about2.default(document.querySelector('.js-about-view'));
+    var members = new _members2.default(document.querySelector('.js-members'));
+
+    var menu = new _menu2.default(document.querySelector(".js-menu"), { menu: [{ href: "#auth", name: "Войти" }, { href: "#chat", name: "Чат" }, { href: "#about", name: "О чате" }, { href: "#logout", name: "Выйти" }] });
+
+    menu.render();
+
+    members.start();
 
     router.register('auth', authView);
     router.register('chat', chatView);
+    router.register('about', aboutView);
+    router.register('logout', logoutView);
 
     router.start();
 });
@@ -1083,7 +1152,7 @@ var Message_model = function () {
 			this.loadMessages();
 			this.updateTimer = setInterval(function () {
 				_this.loadMessages();
-			}, 1000000);
+			}, 10000);
 		}
 	}, {
 		key: "stop",
@@ -1096,7 +1165,7 @@ var Message_model = function () {
 		value: function restXHR(message) {
 			var _this2 = this;
 
-			console.log(message);
+			//console.log(message);
 			var xhr = new XMLHttpRequest();
 			var data = null;
 			xhr.open(message ? "POST" : "GET", this.restUrl);
@@ -1106,7 +1175,7 @@ var Message_model = function () {
 
 			var user = _user2.default.load();
 			if (!user) {
-				alert("Ошибка определения автора!");
+				//alert("Ошибка определения автора!");
 				return;
 			}
 
@@ -1297,6 +1366,360 @@ module.exports = template;
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _block = __webpack_require__(0);
+
+var _block2 = _interopRequireDefault(_block);
+
+var _user = __webpack_require__(2);
+
+var _user2 = _interopRequireDefault(_user);
+
+var _menu = __webpack_require__(20);
+
+var _menu2 = _interopRequireDefault(_menu);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Menu = function (_Block) {
+	_inherits(Menu, _Block);
+
+	function Menu(node) {
+		var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+		_classCallCheck(this, Menu);
+
+		var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, node, options));
+
+		_this.options.menu = options.menu || [];
+		_this.logout = null;
+		_this.login = null;
+		window.addEventListener("hashchange", function () {
+			_this.render();
+		});
+		return _this;
+	}
+
+	_createClass(Menu, [{
+		key: "updateMenu",
+		value: function updateMenu(hash) {
+			this.node.querySelectorAll("li").forEach(function (li) {
+				return li.classList.remove("active");
+			});
+			if (this.node.querySelector("a[href=\"" + hash + "\"]")) this.node.querySelector("a[href=\"" + hash + "\"]").closest("li").classList.add('active');
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			//console.log(this.options.menu);
+			var model = _user2.default.load();
+			if (!model) {
+				if (this.login) {
+					this.options.menu.unshift(this.login);
+					this.login = null;
+				}
+				if (!this.logout) this.logout = this.options.menu.pop();
+			} else {
+				if (this.logout) {
+					this.options.menu.push(this.logout);
+					this.logout = null;
+				}
+				if (!this.login) this.login = this.options.menu.shift();
+			}
+			this.node.innerHTML = (0, _menu2.default)(this.options);
+			this.updateMenu(location.hash);
+		}
+	}]);
+
+	return Menu;
+}(_block2.default);
+
+exports.default = Menu;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pug = __webpack_require__(1);
+
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;;var locals_for_with = (locals || {});(function (menu) {if (menu.length) {
+pug_html = pug_html + "\u003Cul\u003E";
+// iterate menu
+;(function(){
+  var $$obj = menu;
+  if ('number' == typeof $$obj.length) {
+      for (var pug_index0 = 0, $$l = $$obj.length; pug_index0 < $$l; pug_index0++) {
+        var punkt = $$obj[pug_index0];
+pug_html = pug_html + "\u003Cli\u003E\u003Ca" + (pug.attr("href", punkt.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = punkt.name) ? "" : pug_interp)) + "\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
+      }
+  } else {
+    var $$l = 0;
+    for (var pug_index0 in $$obj) {
+      $$l++;
+      var punkt = $$obj[pug_index0];
+pug_html = pug_html + "\u003Cli\u003E\u003Ca" + (pug.attr("href", punkt.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = punkt.name) ? "" : pug_interp)) + "\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
+    }
+  }
+}).call(this);
+
+pug_html = pug_html + "\u003C\u002Ful\u003E";
+}}.call(this,"menu" in locals_for_with?locals_for_with.menu:typeof menu!=="undefined"?menu:undefined));;return pug_html;};
+module.exports = template;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _view = __webpack_require__(4);
+
+var _view2 = _interopRequireDefault(_view);
+
+var _about = __webpack_require__(23);
+
+var _about2 = _interopRequireDefault(_about);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Logout = function (_View) {
+    _inherits(Logout, _View);
+
+    function Logout(node) {
+        _classCallCheck(this, Logout);
+
+        var _this = _possibleConstructorReturn(this, (Logout.__proto__ || Object.getPrototypeOf(Logout)).call(this, node));
+
+        _this.node.innerHTML = (0, _about2.default)();
+        return _this;
+    }
+
+    return Logout;
+}(_view2.default);
+
+exports.default = Logout;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _view = __webpack_require__(4);
+
+var _view2 = _interopRequireDefault(_view);
+
+var _logout = __webpack_require__(24);
+
+var _logout2 = _interopRequireDefault(_logout);
+
+var _user = __webpack_require__(2);
+
+var _user2 = _interopRequireDefault(_user);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Logout = function (_View) {
+    _inherits(Logout, _View);
+
+    function Logout(node) {
+        _classCallCheck(this, Logout);
+
+        var _this = _possibleConstructorReturn(this, (Logout.__proto__ || Object.getPrototypeOf(Logout)).call(this, node));
+
+        _this.node.innerHTML = (0, _logout2.default)();
+        window.addEventListener("hashchange", function () {
+            if (location.hash === '#logout') {
+                var model = _user2.default.load();
+                model.logout();
+            }
+        });
+        return _this;
+    }
+
+    return Logout;
+}(_view2.default);
+
+exports.default = Logout;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pug = __webpack_require__(1);
+
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"about\"\u003E\u003Ch3\u003EУстройство чата\u003C\u002Fh3\u003E\u003Cp\u003EЧат лобби доступен в то время, когда игрок находится вне битв (в игровом лобби). Он разделён на несколько тематических каналов. Сообщения в чат-каналах видят все игроки, находящиеся в этих каналах. Однако в каждой языковой версии игры существует свой отдельный набор каналов чата.\u003C\u002Fp\u003E\u003Cp\u003EСообщения, отправляемые в чат лобби, могут быть адресованы конкретному игроку. Такие сообщения по-прежнему остаются видны всем, но для адресата они дополнительно выделяются. Чтобы написать в канал сообщение, адресованное конкретному игроку, нужно щёлкнуть левой кнопкой мыши по его нику (например, в чате) и выбрать опцию «Написать в общем чате» либо зажать клавишу&nbsp;Ctrl&nbsp;и кликнуть левой кнопкой мыши по нику.\u003C\u002Fp\u003E\u003Ch3\u003EПриватные сообщения\u003C\u002Fh3\u003E\u003Cp\u003EВ ней есть два параметра: «цена» отправки сообщения и «цена» одного символа — эта стоимость измеряется в миллисекундах. Это значит, что ограничение работает не только по количеству сообщений, но и по количеству символов за единицу времени. Такой формат позволяет не банить пользователя, а на несколько секунд блокировать возможность отправки сообщения. Лимит может превысить не всё ваше сообщение, а только его часть, несколько символов. Лишние символы выделяются красным, а вместо кнопки «отправить» появляется таймер, извещающий о том, когда можно будет отправить сообщение такой длины. Вы можете просто сделать текст короче и отправить его немедленно или дождаться, когда для отправки станет доступно сообщение целиком.\u003C\u002Fp\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+module.exports = template;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pug = __webpack_require__(1);
+
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"bye\"\u003E\u003Cdiv\u003EДо скорой встречи!\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+module.exports = template;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _user = __webpack_require__(2);
+
+var _user2 = _interopRequireDefault(_user);
+
+var _block = __webpack_require__(0);
+
+var _block2 = _interopRequireDefault(_block);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Members = function (_Block) {
+	_inherits(Members, _Block);
+
+	function Members(node) {
+		var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+		_classCallCheck(this, Members);
+
+		var _this = _possibleConstructorReturn(this, (Members.__proto__ || Object.getPrototypeOf(Members)).call(this, node, options));
+
+		_this.restUrl = "https://jschat-3993.restdb.io/rest/messages";
+		_this.restAPIKey = "5a5ce22f7d7ef24c5cf08cc0";
+		_this.members = [];
+		_this.forLastMs = 60 * 15 * 1000; // 15 minutes in ms
+		_this.updateTimer = null;
+		return _this;
+	}
+
+	_createClass(Members, [{
+		key: 'start',
+		value: function start() {
+			var _this2 = this;
+
+			this.showMembers();
+			this.updateTimer = setInterval(function () {
+				_this2.showMembers();
+			}, 10000);
+		}
+	}, {
+		key: 'stop',
+		value: function stop() {
+			clearInterval(this.updateTimer);
+			this.updateTimer = null;
+		}
+	}, {
+		key: 'showMembers',
+		value: function showMembers() {
+			var _this3 = this;
+
+			var xhr = new XMLHttpRequest();
+			var data = null;
+			xhr.open("GET", this.restUrl);
+			xhr.setRequestHeader("content-type", "application/json");
+			xhr.setRequestHeader("x-apikey", this.restAPIKey);
+			xhr.setRequestHeader("cache-control", "no-cache");
+			xhr.addEventListener("readystatechange", function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					try {
+						//console.log(xhr.response);
+						var messages = JSON.parse(xhr.response);
+						var dNow = Date.now();
+						messages = messages.filter(function (_ref) {
+							var datetime = _ref.datetime;
+
+							return dNow - datetime < _this3.forLastMs;
+						});
+						_this3.members = messages.map(function (_ref2) {
+							var username = _ref2.username;
+							return username;
+						});
+						_this3.renderMembers();
+					} catch (err) {
+						console.log(err);
+						console.error('invalid check members');
+						return false;
+					}
+				}
+			});
+			xhr.send(data);
+		}
+	}, {
+		key: 'renderMembers',
+		value: function renderMembers() {
+			var model = _user2.default.load();
+			if (model) {
+				if (!this.members.includes(model.name)) this.members.unshift(model.name);
+			}
+			if (!this.members.length) {
+				this.node.innerHTML = "Сейчас в чате никого.";
+				return;
+			}
+			//console.log(this.members,model);
+			this.node.innerHTML = "В чате: " + this.members.join(", ");
+		}
+	}]);
+
+	return Members;
+}(_block2.default);
+
+exports.default = Members;
 
 /***/ })
 /******/ ]);

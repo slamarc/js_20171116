@@ -15,11 +15,27 @@ export default class Chat extends View {
         this.node.innerHTML = template();
 
         let model = User.load();
-        console.log(model);
+        //console.log(model);
         if (!model) {
             location.href = './#auth';
         }
 
+        this.renderChat();
+
+        window.addEventListener("hashchange",()=>{
+
+            let model = User.load();
+            if (!model && location.hash==="#chat") {
+                alert("Пожалуйста, авторизуйтесь.");
+                location.href = './#auth';
+            }
+            else if (model && location.hash==="#chat"){
+                this.renderChat();
+            }
+        });
+    }
+
+    renderChat(){
         this.messageModel = new Message_model();
 
         this.messageModel.start();

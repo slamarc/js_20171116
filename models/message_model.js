@@ -12,7 +12,7 @@ export default class Message_model {
 
 	start(){
 		this.loadMessages();
-		this.updateTimer=setInterval(()=>{this.loadMessages()},1000000);
+		this.updateTimer=setInterval(()=>{this.loadMessages()},10000);
 	}
 
 	stop(){
@@ -21,7 +21,7 @@ export default class Message_model {
 	}
 
 	restXHR(message){
-		console.log(message);
+		//console.log(message);
 		let xhr = new XMLHttpRequest();
 		let data = null;
 		xhr.open(message ? "POST" : "GET", this.restUrl);
@@ -31,7 +31,7 @@ export default class Message_model {
 
 		let user = User.load();
 		if (!user){
-			alert("Ошибка определения автора!");
+			//alert("Ошибка определения автора!");
 			return;
 		}
 
