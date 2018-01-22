@@ -12,7 +12,7 @@ export default class Router {
 
     // Определить текущий, на который пользователь
     start() {
-        console.log('start', this.routes);
+        //console.log('start', this.routes);
 
         window.addEventListener('hashchange', () => {
             this.show(location.hash.replace('#', ''));
@@ -28,8 +28,10 @@ export default class Router {
         if (this.current) {
             this.current.hide();
         }
-
-        this.current = this.routes[hash];
+        if (this.routes[hash])
+            this.current = this.routes[hash];
+        else
+            this.current = this.routes['default'];
         this.current.show();
     }
 

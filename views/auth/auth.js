@@ -22,8 +22,13 @@ export default class Auth extends View {
         this.renderAuth();
 
         window.addEventListener("hashchange",()=>{
-
             let model = User.load();
+            console.log("hashchange",model);
+            
+            if (model && location.hash==="#auth") {
+                location.href = './#chat';
+                return;
+            }
             if (!model && location.hash==="#auth") {
                 this.renderAuth();
             }
@@ -32,6 +37,7 @@ export default class Auth extends View {
     }
 
     renderAuth(){
+        console.log("renderAuth");
         this.button = new Button(this.node.querySelector('.js-submit'), {
             text: 'Войти'
         });

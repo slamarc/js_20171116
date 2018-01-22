@@ -542,7 +542,7 @@ var Router = function () {
         value: function start() {
             var _this = this;
 
-            console.log('start', this.routes);
+            //console.log('start', this.routes);
 
             window.addEventListener('hashchange', function () {
                 _this.show(location.hash.replace('#', ''));
@@ -559,8 +559,7 @@ var Router = function () {
             if (this.current) {
                 this.current.hide();
             }
-
-            this.current = this.routes[hash];
+            if (this.routes[hash]) this.current = this.routes[hash];else this.current = this.routes['default'];
             this.current.show();
         }
 
@@ -643,8 +642,13 @@ var Auth = function (_View) {
         _this.renderAuth();
 
         window.addEventListener("hashchange", function () {
-
             var model = _user2.default.load();
+            console.log("hashchange", model);
+
+            if (model && location.hash === "#auth") {
+                location.href = './#chat';
+                return;
+            }
             if (!model && location.hash === "#auth") {
                 _this.renderAuth();
             }
@@ -658,6 +662,7 @@ var Auth = function (_View) {
         value: function renderAuth() {
             var _this2 = this;
 
+            console.log("renderAuth");
             this.button = new _button2.default(this.node.querySelector('.js-submit'), {
                 text: 'Войти'
             });
@@ -1079,6 +1084,10 @@ var _about = __webpack_require__(21);
 
 var _about2 = _interopRequireDefault(_about);
 
+var _default = __webpack_require__(26);
+
+var _default2 = _interopRequireDefault(_default);
+
 var _members = __webpack_require__(25);
 
 var _members2 = _interopRequireDefault(_members);
@@ -1097,6 +1106,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var logoutView = new _logout2.default(document.querySelector('.js-logout-view'));
     var aboutView = new _about2.default(document.querySelector('.js-about-view'));
     var members = new _members2.default(document.querySelector('.js-members'));
+    var defaultView = new _default2.default(document.querySelector('.js-default-view'));
 
     var menu = new _menu2.default(document.querySelector(".js-menu"), { menu: [{ href: "#auth", name: "Войти" }, { href: "#chat", name: "Чат" }, { href: "#about", name: "О чате" }, { href: "#logout", name: "Выйти" }] });
 
@@ -1108,6 +1118,7 @@ window.addEventListener('DOMContentLoaded', function () {
     router.register('chat', chatView);
     router.register('about', aboutView);
     router.register('logout', logoutView);
+    router.register('default', defaultView);
 
     router.start();
 });
@@ -1724,6 +1735,59 @@ var Members = function (_Block) {
 }(_block2.default);
 
 exports.default = Members;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _view = __webpack_require__(4);
+
+var _view2 = _interopRequireDefault(_view);
+
+var _default = __webpack_require__(27);
+
+var _default2 = _interopRequireDefault(_default);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Logout = function (_View) {
+    _inherits(Logout, _View);
+
+    function Logout(node) {
+        _classCallCheck(this, Logout);
+
+        var _this = _possibleConstructorReturn(this, (Logout.__proto__ || Object.getPrototypeOf(Logout)).call(this, node));
+
+        _this.node.innerHTML = (0, _default2.default)();
+        return _this;
+    }
+
+    return Logout;
+}(_view2.default);
+
+exports.default = Logout;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var pug = __webpack_require__(1);
+
+function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;pug_html = pug_html + "\u003Cdiv class=\"bye\"\u003E\u003Cdiv\u003EТакой страницы не существует.\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";;return pug_html;};
+module.exports = template;
 
 /***/ })
 /******/ ]);

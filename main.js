@@ -3,6 +3,7 @@ import AuthView from './views/auth/auth';
 import ChatView from './views/chat/chat';
 import LogoutView from "./views/logout/logout";
 import AboutView from "./views/about/about";
+import DefaultView from "./views/default/default";
 import Members from "./models/members";
 
 import Menu from "./blocks/menu/menu";
@@ -15,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let logoutView = new LogoutView(document.querySelector('.js-logout-view'));
     let aboutView = new AboutView(document.querySelector('.js-about-view'));
     let members = new Members(document.querySelector('.js-members'));
+    let defaultView = new DefaultView(document.querySelector('.js-default-view'));
 
 
     let menu = new Menu(document.querySelector(".js-menu"),{menu:[
@@ -32,6 +34,7 @@ window.addEventListener('DOMContentLoaded', () => {
     router.register('chat', chatView);
     router.register('about', aboutView);
     router.register('logout', logoutView);
+    router.register('default', defaultView);
 
     router.start();
 });
