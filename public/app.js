@@ -1141,6 +1141,7 @@ var Message_model = function () {
 		this.prevMessages = [];
 		this.updateTimer = null;
 		this.restUrl = "https://jschat-3993.restdb.io/rest/messages";
+		this.restSort = "?sort=datetime&dir=1";
 		this.restAPIKey = "5a5ce22f7d7ef24c5cf08cc0";
 	}
 
@@ -1168,7 +1169,7 @@ var Message_model = function () {
 			//console.log(message);
 			var xhr = new XMLHttpRequest();
 			var data = null;
-			xhr.open(message ? "POST" : "GET", this.restUrl);
+			xhr.open(message ? "POST" : "GET", this.restUrl + (message ? "" : this.restSort));
 			xhr.setRequestHeader("content-type", "application/json");
 			xhr.setRequestHeader("x-apikey", this.restAPIKey);
 			xhr.setRequestHeader("cache-control", "no-cache");
