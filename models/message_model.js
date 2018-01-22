@@ -7,7 +7,7 @@ export default class Message_model {
 		this.prevMessages=[];
 		this.updateTimer=null;
 		this.restUrl="https://jschat-3993.restdb.io/rest/messages";
-		this.restSort="?sort=datetime&dir=1";
+		this.restSort="?max=100&sort=datetime&dir=1";
 		this.restAPIKey="5a5ce22f7d7ef24c5cf08cc0";
 	}
 
