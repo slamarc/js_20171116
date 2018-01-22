@@ -1,14 +1,12 @@
-mixin messageItemRecieve()
-    div.message.message_receive
-        div.message__header= user
-        div.message__body= message
-        
-mixin messageItemSend()
-    div.message.message_send
-        div.message__header= user
-        div.message__body= message
+ol.chat
+	each mess in messages
+		li(class= mess.self)
+			if (mess.self!="none")
+				div.msg
+					div.user= mess.username
+					each str in mess.text
+						p= str
+					time= mess.time 
+			else 
+				p.notification= mess.text
 
-if isOwner
-    +messageItemRecieve()
-else
-    +messageItemSend()

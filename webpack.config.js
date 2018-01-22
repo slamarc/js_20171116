@@ -12,7 +12,7 @@ module.exports = {
         filename: 'app.js'
     },
     
-    watch: false,
+    watch: true,
     
     devtool: "source-map",
     

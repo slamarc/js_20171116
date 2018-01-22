@@ -13,9 +13,10 @@ export default class Auth extends View {
         this.node.innerHTML = template();
 
         let model = User.load();
-
+        console.log(model);
         if (model) {
             location.href = './#chat';
+            return;
         }
 
         this.button = new Button(this.node.querySelector('.js-submit'), {
@@ -40,7 +41,6 @@ export default class Auth extends View {
             alert('Не валидное имя');
             return;
         }
-
 
         let model = new User(name);
         model.save();

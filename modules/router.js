@@ -16,6 +16,7 @@ export default class Router {
 
         window.addEventListener('hashchange', () => {
             this.show(location.hash.replace('#', ''));
+            console.log("hash "+location.hash);
         });
 
         this.show(location.hash.replace('#', ''));

@@ -4,6 +4,8 @@ import template from './chat.pug';
 import MessageCreate from '../../blocks/message-create/message-create';
 import Message from '../../blocks/message/message';
 
+import Message_model from "../../models/message_model";
+
 import User from '../../models/user';
 
 export default class Chat extends View {
@@ -13,15 +15,19 @@ export default class Chat extends View {
         this.node.innerHTML = template();
 
         let model = User.load();
-
+        console.log(model);
         if (!model) {
             location.href = './#auth';
         }
 
-        this.form = new MessageCreate(document.querySelector('.js-form'));
+        this.messageModel = new Message_model();
+
+        this.messageModel.start();
+
+        this.form = new MessageCreate(document.querySelector('.js-form'),this.messageModel);
         this.form.render();
 
-        this.messages = new Message(this.node.querySelector('.js-list'));
+        this.messages = new Message(this.node.querySelector('.js-list'),this.messageModel);
         this.messages.render();
     }
 
